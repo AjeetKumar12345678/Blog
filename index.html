@@ -1,0 +1,329 @@
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Topologies</title>
+<style>
+  body {
+    background: skyblue;
+    color: #000000;
+    font-family: "Poppins", Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    text-align: center;
+  }
+
+  h1 {
+    color: #003366;
+    margin-bottom: 30px;
+    text-shadow: 1px 1px 2px #fff;
+  }
+
+  .container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+  }
+
+  .topology {
+    position: relative;
+    width: 320px;
+    height: auto;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 15px;
+    overflow: hidden;
+    border: 2px solid #fff;
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
+    transition: transform 0.3s;
+    padding-bottom: 15px;
+  }
+
+  .topology:hover {
+    transform: scale(1.05);
+  }
+
+  .topology h2 {
+    margin: 10px 0 5px 0;
+    color: #003366;
+    text-shadow: 0 0 5px #fff;
+  }
+
+  .topology p {
+    font-size: 13px;
+    color: #222;
+    padding: 0 10px;
+    line-height: 1.4;
+    text-align: left;
+  }
+
+  .diagram {
+    position: relative;
+    width: 100%;
+    height: 220px;
+  }
+
+  .node {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    position: absolute;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.3); opacity: 0.7; }
+  }
+
+  .line {
+    position: absolute;
+    height: 2px;
+  }
+
+  svg {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+  }
+
+  /* Color Themes */
+  #star .node, #star svg line {
+    background: #ff4d4d;
+    stroke: #ff4d4d;
+    box-shadow: 0 0 15px #ff4d4d;
+  }
+
+  #ring .node, #ring svg circle {
+    background: #ffcc00;
+    stroke: #ffcc00;
+    box-shadow: 0 0 15px #ffcc00;
+  }
+
+  #bus .node, #bus .line {
+    background: #33cc33;
+    stroke: #33cc33;
+    box-shadow: 0 0 15px #33cc33;
+  }
+
+  #tree .node, #tree svg line {
+    background: #3399ff;
+    stroke: #3399ff;
+    box-shadow: 0 0 15px #3399ff;
+  }
+
+  #mesh .node, #mesh svg line {
+    background: #cc33ff;
+    stroke: #cc33ff;
+    box-shadow: 0 0 15px #cc33ff;
+  }
+
+  .line::after {
+    content: '';
+    position: absolute;
+    top: -3px;
+    left: 0;
+    width: 10px;
+    height: 8px;
+    border-radius: 50%;
+    animation: flow 3s linear infinite;
+  }
+
+  @keyframes flow {
+    0% { left: 0; opacity: 1; }
+    100% { left: calc(100% - 10px); opacity: 0.2; }
+  }
+
+  #bus .line::after { background: #003300; }
+  #star .line::after { background: #990000; }
+  #tree .line::after { background: #003366; }
+  #mesh .line::after { background: #660099; }
+  #ring svg circle { fill: none; }
+</style>
+</head>
+<body>
+
+<h1>Computer Network Topologies</h1>
+
+<div class="container">
+
+<!-- STAR TOPOLOGY -->
+<div class="topology" id="star">
+    <h2>Star Topology</h2>
+    <div class="diagram">
+      <div class="node" style="top:50%; left:50%; transform:translate(-50%,-50%);"></div>
+      <div class="node" style="top:10%; left:50%; transform:translateX(-50%);"></div>
+      <div class="node" style="top:90%; left:50%; transform:translateX(-50%);"></div>
+      <div class="node" style="top:50%; left:10%; transform:translateY(-50%);"></div>
+      <div class="node" style="top:50%; left:90%; transform:translateY(-50%);"></div>
+
+      <svg>
+        <line x1="150" y1="110" x2="150" y2="30" stroke-width="2"/>
+        <line x1="150" y1="110" x2="150" y2="190" stroke-width="2"/>
+        <line x1="150" y1="110" x2="30" y2="110" stroke-width="2"/>
+        <line x1="150" y1="110" x2="270" y2="110" stroke-width="2"/>
+      </svg>
+    </div>
+
+    <p>
+      A <strong>Star Topology</strong> is a network configuration where all devices connect 
+      to a central hub, such as a switch or router.
+    </p>
+
+    <p>
+      <strong>Advantages:</strong><br>
+      • Easy to install and manage<br>
+      • Failure of one node does not affect others<br>
+      • High performance due to dedicated connections
+      <br><br>
+      <strong>Disadvantages:</strong><br>
+      • Entire network depends on the hub<br>
+      • More cabling required<br>
+      • If hub fails, whole network goes down
+    </p>
+</div>
+
+<!-- RING TOPOLOGY -->
+<div class="topology" id="ring">
+    <h2>Ring Topology</h2>
+    <div class="diagram">
+      <svg viewBox="0 0 100 100">
+        <circle cx="50" cy="50" r="40" stroke-width="2">
+          <animate attributeName="stroke-dasharray" from="0,502" to="502,0" dur="4s" repeatCount="indefinite"/>
+        </circle>
+      </svg>
+      <div class="node" style="top:10%; left:50%;"></div>
+      <div class="node" style="top:30%; left:85%;"></div>
+      <div class="node" style="top:70%; left:85%;"></div>
+      <div class="node" style="top:90%; left:50%;"></div>
+      <div class="node" style="top:70%; left:15%;"></div>
+      <div class="node" style="top:30%; left:15%;"></div>
+    </div>
+
+    <p>
+      A <strong>Ring Topology</strong> connects devices in a circular loop, where each device 
+      is connected to exactly two others.
+    </p>
+
+    <p>
+      <strong>Advantages:</strong><br>
+      • Reduces data collisions<br>
+      • Easy to install and expand<br>
+      • Predictable data flow
+      <br><br>
+      <strong>Disadvantages:</strong><br>
+      • Failure of one node breaks the entire ring<br>
+      • Troubleshooting is difficult<br>
+      • Performance decreases as network grows
+    </p>
+</div>
+
+<!-- BUS TOPOLOGY -->
+<div class="topology" id="bus">
+    <h2>Bus Topology</h2>
+    <div class="diagram">
+      <div class="line" style="top:50%; left:10%; width:80%;"></div>
+      <div class="node" style="top:30%; left:20%;"></div>
+      <div class="node" style="top:30%; left:40%;"></div>
+      <div class="node" style="top:30%; left:60%;"></div>
+      <div class="node" style="top:30%; left:80%;"></div>
+    </div>
+
+    <p>
+      A <strong>Bus Topology</strong> connects all devices to a single communication cable 
+      known as the backbone.
+    </p>
+
+    <p>
+      <strong>Advantages:</strong><br>
+      • Easy and inexpensive to install<br>
+      • Requires less cable<br>
+      • Good for small networks
+      <br><br>
+      <strong>Disadvantages:</strong><br>
+      • Backbone failure stops the entire network<br>
+      • Slow with heavy traffic<br>
+      • Troubleshooting cable faults is difficult
+    </p>
+</div>
+
+<!-- TREE TOPOLOGY -->
+<div class="topology" id="tree">
+    <h2>Tree Topology</h2>
+    <div class="diagram">
+      <svg viewBox="0 0 100 100">
+        <line x1="50" y1="10" x2="30" y2="40" stroke-width="2"/>
+        <line x1="50" y1="10" x2="70" y2="40" stroke-width="2"/>
+        <line x1="30" y1="40" x2="20" y2="70" stroke-width="2"/>
+        <line x1="30" y1="40" x2="40" y2="70" stroke-width="2"/>
+        <line x1="70" y1="40" x2="60" y2="70" stroke-width="2"/>
+        <line x1="70" y1="40" x2="80" y2="70" stroke-width="2"/>
+      </svg>
+
+      <div class="node" style="top:10%; left:50%;"></div>
+      <div class="node" style="top:40%; left:30%;"></div>
+      <div class="node" style="top:40%; left:70%;"></div>
+      <div class="node" style="top:70%; left:20%;"></div>
+      <div class="node" style="top:70%; left:40%;"></div>
+      <div class="node" style="top:70%; left:60%;"></div>
+      <div class="node" style="top:70%; left:80%;"></div>
+    </div>
+
+    <p>
+      A <strong>Tree Topology</strong> is a hierarchical structure combining characteristics 
+      of both star and bus topologies.
+    </p>
+
+    <p>
+      <strong>Advantages:</strong><br>
+      • Highly scalable<br>
+      • Easy to add new nodes<br>
+      • Fault isolation is simple
+      <br><br>
+      <strong>Disadvantages:</strong><br>
+      • Backbone failure affects entire network<br>
+      • Expensive cabling<br>
+      • Complex to design
+    </p>
+</div>
+
+<!-- MESH TOPOLOGY -->
+<div class="topology" id="mesh">
+    <h2>Mesh Topology</h2>
+    <div class="diagram">
+      <svg viewBox="0 0 100 100">
+        <line x1="20" y1="20" x2="80" y2="20" stroke-width="2"/>
+        <line x1="20" y1="20" x2="20" y2="80" stroke-width="2"/>
+        <line x1="80" y1="20" x2="80" y2="80" stroke-width="2"/>
+        <line x1="20" y1="80" x2="80" y2="80" stroke-width="2"/>
+        <line x1="20" y1="20" x2="80" y2="80" stroke-width="2"/>
+        <line x1="80" y1="20" x2="20" y2="80" stroke-width="2"/>
+      </svg>
+
+      <div class="node" style="top:20%; left:20%;"></div>
+      <div class="node" style="top:20%; left:80%;"></div>
+      <div class="node" style="top:80%; left:20%;"></div>
+      <div class="node" style="top:80%; left:80%;"></div>
+    </div>
+
+    <p>
+      A <strong>Mesh Topology</strong> connects each device to multiple others, offering 
+      multiple data paths.
+    </p>
+
+    <p>
+      <strong>Advantages:</strong><br>
+      • Very reliable (redundant paths)<br>
+      • High security<br>
+      • Fast data transmission
+      <br><br>
+      <strong>Disadvantages:</strong><br>
+      • Very expensive to install<br>
+      • Requires lots of cabling<br>
+      • Complex setup and maintenance
+    </p>
+</div>
+
+</div>
+</body>
+</html>
